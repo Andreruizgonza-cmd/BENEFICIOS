@@ -147,7 +147,7 @@ body {
 .left { transform: scaleX(-1); }
 
 /* 💎 INPUTS PREMIUM */
-input, select {
+input {
   display: block;
   margin: 15px auto;
   padding: 16px;
@@ -156,15 +156,6 @@ input, select {
   border: 1px solid rgba(255,255,255,0.1);
   color: white;
   border-radius: 12px;
-  outline: none;
-  transition: 0.3s;
-  backdrop-filter: blur(10px);
-}
-
-input:focus, select:focus {
-  border: 1px solid rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.08);
-  transform: scale(1.02);
 }
 
 /* BOTONES */
@@ -186,25 +177,8 @@ input:focus, select:focus {
   color: white;
 }
 
-/* BOTÓN EXTRA */
-.cta-dinamico {
-  margin-top:20px;
-  background: linear-gradient(45deg,#ff003c,#ff5f6d);
-  border:none;
-  padding:14px 30px;
-  border-radius:30px;
-  color:white;
-  cursor:pointer;
-  transition:0.3s;
-}
-.cta-dinamico:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px rgba(255,0,60,0.5);
-}
-
 .hidden { display:none; }
 
-/* WHATS */
 .whatsapp-float {
   position:fixed;
   bottom:20px;
@@ -214,74 +188,6 @@ input:focus, select:focus {
   padding:15px 18px;
   border-radius:30px;
   text-decoration:none;
-  z-index:999;
-}
-@media (max-width: 768px) {
-
-  .top-bar {
-    left: 20px;
-    right: 20px;
-  }
-
-  .logo img {
-    width: 80px;
-  }
-
-  .logo span {
-    font-size: 10px;
-    letter-spacing: 2px;
-  }
-
-  .section {
-    padding: 120px 15px 60px;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-
-  p {
-    font-size: 14px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2,1fr);
-    gap: 25px;
-  }
-
-  .beneficio-item img {
-    max-width: 90px;
-  }
-
-  .grid-autos {
-    grid-template-columns: repeat(2,1fr);
-    gap: 25px;
-  }
-
-  .car {
-    width: 120px;
-    height: auto;
-  }
-
-  .car-item p {
-    font-size: 12px;
-  }
-
-  input, select {
-    width: 90%;
-    font-size: 14px;
-  }
-
-  .cta, .cta-secundario, .cta-dinamico {
-    width: 90%;
-    font-size: 14px;
-  }
-
-  .whatsapp-float {
-    padding: 12px 14px;
-    font-size: 14px;
-  }
-
 }
 </style>
 </head>
@@ -311,7 +217,7 @@ input:focus, select:focus {
 
 <div class="section" id="beneficios">
 <h1>Acceso a beneficios exclusivos</h1>
-<p>ESCOGE TU BENEFICIO</p>
+<p>+27 clientes ya aprovecharon esta promoción esta semana</p>
 
 <div class="grid">
 <div class="beneficio-item" onclick="selectBeneficio(this,'Kit')"><img src="kit.jpg"><p>KIT</p></div>
@@ -323,7 +229,7 @@ input:focus, select:focus {
 </div>
 
 <button class="cta-dinamico" onclick="alert('🔥 Promoción activa solo hoy')">
-ACTIVO SOLO ESTA SEMANA
+Ver promoción del día
 </button>
 
 </div>
@@ -347,24 +253,10 @@ ACTIVO SOLO ESTA SEMANA
 <h1>Registro</h1>
 
 <input id="nombre" placeholder="Nombre">
-
 <input id="telefono" placeholder="Teléfono"
 inputmode="numeric"
 maxlength="10"
 oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-
-<input id="enganche" placeholder="Enganche mínimo 10%"
-oninput="validarEnganche(this)">
-
-<small id="engancheError" style="color:#ff4d4d; display:none;">
-El mínimo es 10%
-</small>
-
-<select id="tipo">
-<option value="">¿Cómo deseas pagar?</option>
-<option>Crédito</option>
-<option>Contado</option>
-</select>
 
 <button class="cta" onclick="enviarDatos()">Continuar</button>
 </div>
@@ -398,9 +290,7 @@ a.style.display="none";
 b.classList.remove("hidden");
 }
 
-/* 🔥 ANIMACIÓN ORIGINAL COMPLETA */
 function animarCentro(el, callback){
-
   const rect = el.getBoundingClientRect();
   const glow = document.getElementById("glow");
 
@@ -453,66 +343,40 @@ modelo=m;
 animarCentro(el, ()=>cambiar(modelos,datos));
 }
 
-function validarEnganche(input){
-let valor=parseFloat(input.value);
-if(valor<10){
-document.getElementById("engancheError").style.display="block";
-}else{
-document.getElementById("engancheError").style.display="none";
-}
-}
-
 function enviarDatos(){
 
 let nombre=document.getElementById("nombre").value;
 let tel=document.getElementById("telefono").value;
-let enganche=document.getElementById("enganche").value;
-let tipo=document.getElementById("tipo").value;
 
 if(!tel || tel.length<10){
 alert("Teléfono inválido");
 return;
 }
-if(!enganche || parseFloat(enganche)<10){
-alert("Enganche mínimo 10%");
-return;
-}
-if(!tipo){
-alert("Selecciona tipo de compra");
-return;
-}
 
-// 🔥 ENVÍA A GOOGLE SHEETS
 fetch("https://script.google.com/macros/s/AKfycbzK2Z5Lr6x0bTbxBIb2aWNpYhGa-Nj6SDKKBIiBiMplCh97dnSZrFtkygO6fC2NJPzewg/exec", {
   method: "POST",
   body: JSON.stringify({
     nombre: nombre,
     telefono: tel,
     modelo: modelo,
-    beneficio: beneficio,
-    enganche: enganche,
-    tipo: tipo
+    beneficio: beneficio
   }),
   headers: {
     "Content-Type": "text/plain;charset=utf-8"
   }
 });
 
-// 👉 TU MISMO FLUJO
 folio="NS"+Math.floor(Math.random()*100000);
 folioTexto.innerHTML=`Folio: ${folio}<br>${beneficio}<br>${modelo}`;
 cambiar(datos,final);
 
-// 🔥 ABRE WHATS AUTOMÁTICO
 setTimeout(()=>{
   let texto=`Hola, quiero avanzar con mi crédito hoy.
 
 Nombre: ${nombre}
 Teléfono: ${tel}
 Modelo: ${modelo}
-Beneficio: ${beneficio}
-Enganche: ${enganche}%
-Tipo: ${tipo}`;
+Beneficio: ${beneficio}`;
 
   window.open(`https://wa.me/5631214071?text=${encodeURIComponent(texto)}`);
 },800);
