@@ -108,7 +108,6 @@ body {
   gap: 60px;
   max-width: 900px;
   margin: auto;
-  position: relative;
 }
 
 .beneficio-item {
@@ -132,8 +131,6 @@ body {
 .car-item {
   text-align: center;
   cursor: pointer;
-  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1),
-              opacity 0.4s ease;
 }
 
 .car-item p { margin-top: 10px; opacity: 0.8; }
@@ -146,7 +143,7 @@ body {
 
 .left { transform: scaleX(-1); }
 
-/* 💎 INPUTS PREMIUM */
+/* INPUTS */
 input {
   display: block;
   margin: 15px auto;
@@ -177,6 +174,16 @@ input {
   color: white;
 }
 
+.cta-dinamico {
+  margin-top:20px;
+  background: linear-gradient(45deg,#ff003c,#ff5f6d);
+  border:none;
+  padding:14px 30px;
+  border-radius:30px;
+  color:white;
+  cursor:pointer;
+}
+
 .hidden { display:none; }
 
 .whatsapp-float {
@@ -188,206 +195,80 @@ input {
   padding:15px 18px;
   border-radius:30px;
   text-decoration:none;
+  z-index:999;
+}
+
+/* 🔥 RESPONSIVE REAL */
+@media (max-width: 768px) {
+
+  .top-bar {
+    left: 15px;
+    right: 15px;
+  }
+
+  .logo img {
+    width: 80px;
+  }
+
+  .logo span {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .section {
+    padding: 110px 15px 60px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+  }
+
+  .beneficio-item img {
+    max-width: 80px;
+  }
+
+  .grid-autos {
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+  }
+
+  .car {
+    width: 110px;
+    height: auto;
+  }
+
+  .car-item p {
+    font-size: 12px;
+  }
+
+  input {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .cta, .cta-secundario, .cta-dinamico {
+    width: 100%;
+    max-width: 320px;
+    font-size: 14px;
+  }
+
+  .whatsapp-float {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
 }
 </style>
 </head>
 
 <body>
 
-<div id="glow" class="glow-rojo"></div>
-
-<a class="whatsapp-float" href="https://wa.me/5631214071" target="_blank">
-💬 WhatsApp
-</a>
-
-<div id="intro">
-  <div class="intro-content">
-    <img src="logo.jpg" class="intro-logo">
-    <div class="intro-text">NISSAN CITY HUB</div>
-  </div>
-</div>
-
-<div class="top-bar">
-  <div class="logo">
-    <img src="logo.jpg">
-    <span>NISSAN CITY HUB</span>
-  </div>
-  <div id="contador" class="timer-box"></div>
-</div>
-
-<div class="section" id="beneficios">
-<h1>Acceso a beneficios exclusivos</h1>
-<p>+27 clientes ya aprovecharon esta promoción esta semana</p>
-
-<div class="grid">
-<div class="beneficio-item" onclick="selectBeneficio(this,'Kit')"><img src="kit.jpg"><p>KIT</p></div>
-<div class="beneficio-item" onclick="selectBeneficio(this,'Birlos')"><img src="birlos.jpg"><p>BIRLOS</p></div>
-<div class="beneficio-item" onclick="selectBeneficio(this,'Tatuado')"><img src="tatuado.jpg"><p>TATUADO</p></div>
-<div class="beneficio-item" onclick="selectBeneficio(this,'Tapetes')"><img src="tapetes.jpg"><p>TAPETES</p></div>
-<div class="beneficio-item" onclick="selectBeneficio(this,'Servicio')"><h2>1er Servicio</h2></div>
-<div class="beneficio-item" onclick="selectBeneficio(this,'Película')"><img src="polarizado.jpg"><p>PELÍCULA</p></div>
-</div>
-
-<button class="cta-dinamico" onclick="alert('🔥 Promoción activa solo hoy')">
-Ver promoción del día
-</button>
-
-</div>
-
-<div class="section hidden" id="modelos">
-<h1>Selecciona tu modelo</h1>
-
-<div class="grid-autos">
-<div class="car-item" onclick="selectCar(this,'Versa')"><img src="VERSA.PNG" class="car left"><p>VERSA</p></div>
-<div class="car-item" onclick="selectCar(this,'Sentra')"><img src="SENTRA.PNG" class="car left"><p>SENTRA</p></div>
-<div class="car-item" onclick="selectCar(this,'Kicks')"><img src="kicks.png" class="car left"><p>KICKS</p></div>
-<div class="car-item" onclick="selectCar(this,'X-Trail')"><img src="xtrail.png" class="car"><p>X-TRAIL</p></div>
-<div class="car-item" onclick="selectCar(this,'e-POWER')"><img src="epower.png" class="car left"><p>E-POWER</p></div>
-<div class="car-item" onclick="selectCar(this,'Magnite')"><img src="magnite.png" class="car left"><p>MAGNITE</p></div>
-<div class="car-item" onclick="selectCar(this,'Frontier')"><img src="frontier.png" class="car"><p>FRONTIER</p></div>
-<div class="car-item" onclick="selectCar(this,'Pathfinder')"><img src="pathfinder.png" class="car"><p>PATHFINDER</p></div>
-</div>
-</div>
-
-<div class="section hidden" id="datos">
-<h1>Registro</h1>
-
-<input id="nombre" placeholder="Nombre">
-<input id="telefono" placeholder="Teléfono"
-inputmode="numeric"
-maxlength="10"
-oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-
-<button class="cta" onclick="enviarDatos()">Continuar</button>
-</div>
-
-<div class="section hidden" id="final">
-<h1>Registro completado</h1>
-<p id="folioTexto"></p>
-<button class="cta-secundario" onclick="abrirWhats()">QUIERO MI CRÉDITO APROBADO HOY</button>
-</div>
-
-<script>
-let beneficio="",modelo="",folio="";
-
-window.onload=()=>{
-setTimeout(()=>{
-intro.classList.add("intro-exit");
-setTimeout(()=>intro.style.display="none",800);
-},2200);
-};
-
-let tiempo=600;
-setInterval(()=>{
-let m=Math.floor(tiempo/60);
-let s=tiempo%60;
-contador.innerText=`Promoción expira en ${m}:${s<10?'0'+s:s}`;
-tiempo--;
-},1000);
-
-function cambiar(a,b){
-a.style.display="none";
-b.classList.remove("hidden");
-}
-
-function animarCentro(el, callback){
-  const rect = el.getBoundingClientRect();
-  const glow = document.getElementById("glow");
-
-  const dx = window.innerWidth/2 - (rect.left + rect.width/2);
-  const dy = window.innerHeight/2 - (rect.top + rect.height/2);
-
-  glow.classList.add("active");
-  glow.style.left = (rect.left - 100) + "px";
-  glow.style.top = (rect.top - 100) + "px";
-
-  el.style.transition = "transform 0.8s cubic-bezier(0.22,1,0.36,1)";
-  el.style.transform = `translate(${dx}px, ${dy}px) scale(2)`;
-  el.style.zIndex = "20";
-
-  requestAnimationFrame(()=>{
-    glow.style.transform = `translate(${dx}px, ${dy}px)`;
-  });
-
-  document.querySelectorAll(".beneficio-item, .car-item").forEach(e=>{
-    if(e!==el){
-      e.style.opacity="0.1";
-      e.style.transform="scale(0.7)";
-    }
-  });
-
-  setTimeout(()=>{
-    callback();
-
-    el.style.transform = "";
-    el.style.zIndex = "";
-
-    glow.classList.remove("active");
-    glow.style.transform = "";
-
-    document.querySelectorAll(".beneficio-item, .car-item").forEach(e=>{
-      e.style.opacity="";
-      e.style.transform="";
-    });
-
-  },800);
-}
-
-function selectBeneficio(el,b){
-beneficio=b;
-animarCentro(el, ()=>cambiar(beneficios,modelos));
-}
-
-function selectCar(el,m){
-modelo=m;
-animarCentro(el, ()=>cambiar(modelos,datos));
-}
-
-function enviarDatos(){
-
-let nombre=document.getElementById("nombre").value;
-let tel=document.getElementById("telefono").value;
-
-if(!tel || tel.length<10){
-alert("Teléfono inválido");
-return;
-}
-
-fetch("https://script.google.com/macros/s/AKfycbzK2Z5Lr6x0bTbxBIb2aWNpYhGa-Nj6SDKKBIiBiMplCh97dnSZrFtkygO6fC2NJPzewg/exec", {
-  method: "POST",
-  body: JSON.stringify({
-    nombre: nombre,
-    telefono: tel,
-    modelo: modelo,
-    beneficio: beneficio
-  }),
-  headers: {
-    "Content-Type": "text/plain;charset=utf-8"
-  }
-});
-
-folio="NS"+Math.floor(Math.random()*100000);
-folioTexto.innerHTML=`Folio: ${folio}<br>${beneficio}<br>${modelo}`;
-cambiar(datos,final);
-
-setTimeout(()=>{
-  let texto=`Hola, quiero avanzar con mi crédito hoy.
-
-Nombre: ${nombre}
-Teléfono: ${tel}
-Modelo: ${modelo}
-Beneficio: ${beneficio}`;
-
-  window.open(`https://wa.me/5631214071?text=${encodeURIComponent(texto)}`);
-},800);
-
-}
-
-function abrirWhats(){
-let texto=`Hola quiero avanzar con mi crédito hoy. Modelo: ${modelo}`;
-window.open(`https://wa.me/5631214071?text=${encodeURIComponent(texto)}`);
-}
-</script>
-
-</body>
-</html>
